@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd" version="3.0">
+
+    <persistence-unit name="jpa-example" transaction-type="RESOURCE_LOCAL">
+        <!-- Specify your JPA provider -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Entity classes (optional if using classpath scanning) -->
+        <!-- <class>com.example.entity.YourEntity</class> -->
+        <properties>
+            <!-- JDBC configuration -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Second_level_ehcache"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value="atasiMalik@12"/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+
+            <!-- Enable Hibernate Second-Level Cache -->
+            <!-- Allows multiple EntityManagers to share cached entity data.
+                 Without this, each new EntityManager may fetch data from DB. -->
+            <property name="hibernate.cache.use_second_level_cache"
+                      value="true"/>
+
+
+            <!-- Enable Query Cache -->
+            <!-- Stores the results of queries in cache when query caching
+                 is explicitly enabled using setHint or setCacheable(true).
+                 Useful for frequently executed queries. -->
+            <property name="hibernate.cache.use_query_cache"
+                      value="true"/>
+
+
+            <!-- Configure Ehcache as Hibernate's Cache Provider -->
+            <!-- Connects Hibernate with Ehcache.
+                 Ehcache manages the storage and retrieval of cached data. -->
+            <property name="hibernate.cache.region.factory_class"
+                      value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>
+
+
+            <!-- Enable Structured Cache Entries -->
+            <!-- Stores cached entity data in a structured format
+                 instead of a disassembled array representation.
+                 Useful for readability and debugging. -->
+            <property name="hibernate.cache.use_structured_entries"
+                      value="true"/>
+
+
+            <!-- Specify Custom Ehcache Configuration File -->
+            <!-- Tells Ehcache to load cache settings from ehcache.xml.
+                 This file defines cache regions, memory limits,
+                 expiration time and other cache configurations. -->
+            <property name="net.sf.ehcache.configurationResourceName"
+                      value="ehcache.xml"/>
+
+            <!-- Hibernate properties -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/> <!-- use create, update, validate, or none -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+
+
+
